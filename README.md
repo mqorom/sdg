@@ -10,3 +10,21 @@ Steps to run BE server
 
             Server is up and listening on port 8080!
             Connected successfully to the cloud mongo DB
+            
+
+            
+#Author EndPoints
+
+- Get all Authors ---> GET http://localhost:8080/library/authors
+- Get one Author  ---> GET http://localhost:8080/library/author/{id}
+
+- Create new Author --> POST http://localhost:8080/library/author <br>
+                        {
+                            "firstName": "Mohammad",
+                            "lastName": "Qorom"
+                        }
+
+- Update Specific Author --> PUT http://localhost:8080/library/author/{id} <br>
+                        {
+                            "firstName": "Mr.Mohammad",
+                        }
