@@ -1,13 +1,10 @@
-class BadRequest extends Error {
-    constructor (message) {
-        super()
-        Error.captureStackTrace(this, this.constructor);
-        this.name = this.constructor.name
-        this.status = 400
-        this.message = message;
-    }
-    statusCode() {
-        return this.status
+const httpStatusCodes = require('./httpStatusCode')
+const BaseError = require('./baseError')
+
+class BadRequest extends BaseError {
+    constructor(message) {
+        super(BadRequest, httpStatusCodes.BAD_REQUEST, true, message)
     }
 }
-module.exports = BadRequest
+
+module.exports = BadRequest;

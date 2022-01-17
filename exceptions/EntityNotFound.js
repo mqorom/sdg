@@ -1,14 +1,9 @@
-class EntityNotFound extends Error {
-    constructor (message) {
-        super()
-        Error.captureStackTrace(this, this.constructor);
-        this.name = this.constructor.name;
-        this.status = 404;
-        this.message = message;
-    }
-    statusCode() {
-        return this.status
+const httpStatusCodes = require('./httpStatusCode')
+const BaseError = require('./baseError')
+
+class EntityNotFound extends BaseError {
+    constructor(message) {
+        super(EntityNotFound, httpStatusCodes.NOT_FOUND, true, message)
     }
 }
 module.exports = EntityNotFound
-

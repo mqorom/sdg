@@ -1,6 +1,6 @@
 const Author = require("../models/author");
-const EntityNotFound = require('../exceptions/EntityNotFound')
-const BadRequest = require('../exceptions/BadRequest')
+const EntityNotFound = require('../exceptions/entityNotFound')
+const BadRequest = require('../exceptions/badRequest')
 const Utils = require('../common/Utils')
 
 // Display list of all Authors.
@@ -10,32 +10,58 @@ exports.author_list = async function (req, res) {
 };
 
 // Display detail page for a specific Author.
-exports.author_detail = async function (req, res) {
-
-    if (!Utils.isValidId(req.params.id)) {
-        res.send(new BadRequest("Author is not exist"));
+exports.author_detail = async function (req, res, next) {
+    try {
+        const author = await getAuthor(req.params.id)
+        res.send(author);
+    } catch (error) {
+        next(error)
     }
-    const author = await Author.findById(req.params.id)
-    if (Utils.isEmpty(author)) {
-        res.send(new EntityNotFound("Author is not exist"));
-        //throw new EntityNotFound("sss");
-    }
-    res.send(author);
 };
 
 // Handle Author create on POST.
-exports.author_create_post = async function (req, res) {
-    const {firstName, lastName} = req.body;
-    if (Utils.isEmpty(firstName) || Utils.isEmpty(lastName)) {
-        res.send(new BadRequest("Author is not exist"));
+exports.author_create_post = async function (req, res, next) {
+    try {
+        const {firstName, lastName} = req.body;
+        if (Utils.isEmpty(firstName) || Utils.isEmpty(lastName)) {
+            throw new BadRequest(`firstName or lastName should not be empty`);
+        }
+        Author.create({
+            firstName,
+            lastName,
+        }).then(author => res.json(author));
+    } catch (error) {
+        next(error)
     }
-    Author.create({
-        firstName,
-        lastName,
-    }).then(author => res.json(author));
 };
 
 // Handle Author update on PUT.
-exports.author_update_put = function (req, res) {
-    res.send('NOT IMPLEMENTED: Author update PUT');
+exports.author_update_put = async function (req, res, next) {
+    try {
+        const author = await getAuthor(req.params.id)
+        const {firstName, lastName} = req.body;
+
+        if (!Utils.isEmpty(firstName)) {
+            author.firstName = firstName;
+        }
+
+        if (!Utils.isEmpty(lastName)) {
+            author.lastName = lastName;
+        }
+        author.save();
+        res.send(author);
+    } catch (error) {
+        next(error)
+    }
 };
+
+async function getAuthor(id) {
+    if (!Utils.isValidId(id)) {
+        throw new BadRequest(`Invalid Author id: ${id}`);
+    }
+    const author = await Author.findById(id)
+    if (Utils.isEmpty(author)) {
+        throw new EntityNotFound(`Author with id: ${id} not found.`)
+    }
+    return author;
+}
