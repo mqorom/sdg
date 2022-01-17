@@ -16,5 +16,5 @@ const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
-    console.log("Connected successfully to mongo DB");
+    console.log("Connected successfully to the cloud mongo DB");
 });

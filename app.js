@@ -8,5 +8,5 @@ app.use('/library', library);
 
 const port = 8080;
 app.listen(port, function () {
-    console.log('Example app listening on port 8080!')
+    console.log('Server is up and listening on port 8080!')
 });
