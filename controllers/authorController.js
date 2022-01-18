@@ -55,7 +55,7 @@ exports.author_update_put = async function (req, res, next) {
     }
 };
 
-async function getAuthor(id) {
+exports.getAuthor = async function getAuthor(id) {
     if (!Utils.isValidId(id)) {
         throw new BadRequest(`Invalid Author id: ${id}`);
     }

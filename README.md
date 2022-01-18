@@ -26,5 +26,23 @@ Steps to run BE server
 
 - Update Specific Author --> PUT http://localhost:8080/library/author/{id} <br>
                         {
-                            "firstName": "Mr.Mohammad",
+                            "firstName": "Mr.Mohammad"
+                        }
+                        
+                        
+#Book EndPoints
+
+- Get all Books ---> GET http://localhost:8080/library/books
+- Get one Book  ---> GET http://localhost:8080/library/book/{id}
+
+- Create new Book --> POST http://localhost:8080/library/book <br>
+                        {
+                            "name": "c++",
+                            "isbn": "1245874",
+                            "authorId": "145874587457" --> should be a reference to an existing authorId
+                        }
+
+- Update Specific book --> PUT http://localhost:8080/library/book/{id} <br>
+                        {
+                            "name": "Java Script"
                         }

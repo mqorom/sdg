@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
-const BookSchema = new mongoose.Schema({
+const BookSchema = new Schema({
     name: String,
-    isbn: String
-    //,
-    // author: {type: Schema.Types.ObjectId, ref: 'Author', required: true}
+    isbn: String,
+    authorId: {type: Schema.Types.ObjectId, ref: 'author', required: true}
 });
 
 const Book = mongoose.model('book', BookSchema);
