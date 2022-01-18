@@ -14,6 +14,8 @@ exports.book_list = async function (req, res) {
 exports.book_detail = async function (req, res, next) {
     try {
         const book = await getBook(req.params.id)
+        const author = await authorController.getAuthor(book.authorId.valueOf());
+        book.author = author;
         res.send(book);
     } catch (error) {
         next(error)
