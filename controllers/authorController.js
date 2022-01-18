@@ -12,7 +12,7 @@ exports.author_list = async function (req, res) {
 // Display detail page for a specific Author.
 exports.author_detail = async function (req, res, next) {
     try {
-        const author = await getAuthor(req.params.id)
+        const author = await module.exports.getAuthor(req.params.id)
         res.send(author);
     } catch (error) {
         next(error)
@@ -38,7 +38,7 @@ exports.author_create_post = async function (req, res, next) {
 // Handle Author update on PUT.
 exports.author_update_put = async function (req, res, next) {
     try {
-        const author = await getAuthor(req.params.id)
+        const author = await module.exports.getAuthor(req.params.id)
         const {firstName, lastName} = req.body;
 
         if (!Utils.isEmpty(firstName)) {
